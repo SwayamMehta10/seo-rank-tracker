@@ -61,10 +61,10 @@ export default function KeywordPage(props) {
 					/>
 				</div>
 			</div>
-			{results.length === 0 ? (
-				<div>Loading ...</div>
-			) : (
+			{results.length > 0 ? (
 				<Chart width={"100%"} results={results} />
+			) : (
+				<div>Loading ...</div>
 			)}
 		</>
 	);

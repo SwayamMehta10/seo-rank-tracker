@@ -6,6 +6,7 @@ const ResultSchema = new Schema(
 		keyword: { type: String, required: true },
 		search_id: { type: String, required: true },
 		position: { type: Number, required: true },
+		complete: { type: Boolean, default: false },
 	},
 	{ timestamps: true }
 );

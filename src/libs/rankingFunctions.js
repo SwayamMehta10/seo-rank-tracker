@@ -37,11 +37,10 @@ export default async function doGoogleSearch(domain, keyword) {
 				try {
 					const search_id = json["search_metadata"].id;
 					const search_results = json["organic_results"];
-					// console.log(search_results);
 					const result = search_results.find((r) =>
 						r.link.includes(domain)
 					);
-					const position = result?.position;
+					const position = result?.position ?? 0;
 					resolve({ search_id, position });
 				} catch (error) {
 					reject(error);
@@ -50,4 +49,3 @@ export default async function doGoogleSearch(domain, keyword) {
 		);
 	});
 }
-

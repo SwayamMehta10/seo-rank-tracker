@@ -2,8 +2,11 @@ import { sortBy, sumBy, uniqBy } from "lodash";
 import { ResponsiveContainer, AreaChart, Tooltip, Area, YAxis } from "recharts";
 
 export default function Chart({ results, width }) {
+	results = (results || []).filter((r) => r.position);
+	if (!results?.length) {
+		return "";
+	}
 	const lowestRank = sortBy(results, "position").reverse()?.[0].position;
-	const highestRank = sortBy(results, "position")?.[0]?.position;
 	const domainLow = lowestRank + 3;
 	let data = results;
 	data = data.map((result) => {
@@ -35,7 +38,7 @@ export default function Chart({ results, width }) {
 				<AreaChart
 					width={width}
 					data={data}
-					margin={{ top: 0, right: 0, left: 0, bottom: 0 }}
+					margin={{ top: 10, right: 0, left: 0, bottom: 0 }}
 				>
 					<defs>
 						<linearGradient

@@ -4,9 +4,9 @@ import Chart from "./chart";
 
 function DomainRow({ owner, domain, icon, keywords, results }) {
 	return (
-		<div className="flex gap-2 bg-white border border-blue-200 border-b-4 p-4 rounded-lg items-center my-3">
-			{icon && <img src={icon} alt="" className="h-12" />}
-			<div className="">
+		<div className="flex gap-2 bg-white border border-blue-200 border-b-4 rounded-lg items-center my-3">
+			{icon && <img src={icon} alt="" className="h-12 ml-4 my-4" />}
+			<div className="grow pl-2">
 				<Link
 					href={"/domains/" + domain}
 					className="font-bold text-xl leading-5 block"
@@ -14,9 +14,7 @@ function DomainRow({ owner, domain, icon, keywords, results }) {
 					{domain}
 				</Link>
 				{keywords.map((keywordDoc) => (
-					<
-						//eslint-disable-next-line react/jsx-key
-					>
+					<span key={keywordDoc._id}>
 						<Link
 							href={
 								"/domains/" + domain + "/" + keywordDoc.keyword
@@ -25,11 +23,11 @@ function DomainRow({ owner, domain, icon, keywords, results }) {
 						>
 							{keywordDoc.keyword}
 						</Link>{" "}
-					</>
+					</span>
 				))}
 			</div>
-			<div className="">
-				<Chart width={300} results={results} />
+			<div className="pt-2">
+				<Chart width={200} results={results} />
 			</div>
 		</div>
 	);

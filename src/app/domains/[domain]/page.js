@@ -66,7 +66,11 @@ export default function DomainPage(props) {
 					/>
 				</div>
 			</div>
-			<NewKeywordForm domain={domain} onNew={fetchKeywords} />
+			<NewKeywordForm
+				domain={domain}
+				onNew={fetchKeywords}
+				onSavingStarted={() => setLoading(true)}
+			/>
 			{loading && <div>Loading...</div>}
 			{!loading &&
 				keywords.map((keywordDoc) => (

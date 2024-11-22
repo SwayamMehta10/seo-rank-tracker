@@ -2,9 +2,10 @@
 import { useState } from "react";
 import axios from "axios";
 
-export default function NewKeywordForm({ onNew, domain }) {
+export default function NewKeywordForm({ onNew, domain, onSavingStarted }) {
 	const [keyword, setKeyword] = useState(""); // Hook to manage domain state
 	async function handleSubmit(ev) {
+		onSavingStarted();
 		ev.preventDefault(); // Prevents default form submission behaviour that would cause a page reload
 		setKeyword("");
 		await axios.post("/api/keywords", { keyword, domain });
