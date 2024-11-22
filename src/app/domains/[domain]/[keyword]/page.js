@@ -3,12 +3,21 @@ import DeleteButton from "@/components/deleteButton";
 import DoubleHeader from "@/components/doubleHeader";
 import axios from "axios";
 import { useRouter } from "next/navigation";
+import { useState, useEffect } from "react";
+import Chart from "@/components/chart";
 import Swal from "sweetalert2";
 
 export default function KeywordPage(props) {
 	const domain = props.params.domain;
 	const keyword = decodeURIComponent(props.params.keyword);
 	const router = useRouter();
+	const [results, setResults] = useState([]);
+
+	useEffect(() => {
+		axios
+			.get("/api/keywords?keyword=" + keyword + "&domain=" + domain)
+			.then((response) => setResults(response.data.results));
+	}, []);
 
 	async function deleteKeyword() {
 		const urlParams =
@@ -21,7 +30,7 @@ export default function KeywordPage(props) {
 
 	return (
 		<>
-			<div className="flex items-end mb-4">
+			<div className="flex items-end mb-8">
 				<DoubleHeader
 					preTitle={domain + " »"}
 					mainTitle={keyword}
@@ -52,7 +61,11 @@ export default function KeywordPage(props) {
 					/>
 				</div>
 			</div>
-			<div className="bg-green-300 h-36"></div>
+			{results.length === 0 ? (
+				<div>Loading ...</div>
+			) : (
+				<Chart width={"100%"} results={results} />
+			)}
 		</>
 	);
 }

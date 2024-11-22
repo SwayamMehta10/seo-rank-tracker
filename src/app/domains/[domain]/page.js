@@ -11,6 +11,7 @@ import Swal from "sweetalert2";
 export default function DomainPage(props) {
 	const [keywords, setKeywords] = useState([]);
 	const [loading, setLoading] = useState(false);
+	const [results, setResults] = useState([]);
 	const router = useRouter();
 	const domain = props.params.domain;
 	useEffect(() => {
@@ -20,7 +21,8 @@ export default function DomainPage(props) {
 	async function fetchKeywords() {
 		setLoading(true);
 		await axios.get("/api/keywords?domain=" + domain).then((response) => {
-			setKeywords(response.data);
+			setKeywords(response.data.keywords);
+			setResults(response.data.results);
 			setLoading(false);
 		});
 	}
@@ -67,8 +69,14 @@ export default function DomainPage(props) {
 			<NewKeywordForm domain={domain} onNew={fetchKeywords} />
 			{loading && <div>Loading...</div>}
 			{!loading &&
-				keywords.map((keyword) => (
-					<KeywordRow key={keyword._id} {...keyword} />
+				keywords.map((keywordDoc) => (
+					<KeywordRow
+						key={keywordDoc._id}
+						{...keywordDoc}
+						results={results.filter(
+							(r) => r.keyword === keywordDoc.keyword
+						)}
+					/>
 				))}
 			{!loading && !keywords?.length && <div>No keywords found :(</div>}
 		</div>

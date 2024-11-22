@@ -1,7 +1,7 @@
 import DoubleHeader from "@/components/doubleHeader";
 import DomainRow from "@/components/domainRow";
 
-export default function DomainList({ domains, keywords }) {
+export default function DomainList({ domains, keywords, results }) {
 	return (
 		<>
 			<DoubleHeader
@@ -18,6 +18,9 @@ export default function DomainList({ domains, keywords }) {
 					{...domainDoc}
 					keywords={keywords.filter(
 						(k) => k.domain === domainDoc.domain
+					)}
+					results={results.filter(
+						(re) => re.domain === domainDoc.domain
 					)}
 				/>
 			))}

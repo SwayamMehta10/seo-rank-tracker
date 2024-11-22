@@ -54,3 +54,5 @@ This flow ensures data validation, session-based ownership, and a smooth user in
 14. useRouter() allows you to access the router object which contains various properties and methods related to routing in your Next.js application, such as the current pathname, query parameters, and methods for navigation.
 
 15. Use sweetalerts (https://sweetalert2.github.io/) for popup messages
+
+16. Using serpAPI instead of Puppeteer for scraping ranks/positions. In POST request for adding new keyword, make function call to do the google search using serpAPI and once it returns the search_id and position, create a document in the Result model.

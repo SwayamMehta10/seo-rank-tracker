@@ -7,6 +7,7 @@ import { authOptions } from "../auth/[...nextauth]/route";
 import axios from "axios";
 import * as cheerio from "cheerio";
 import { Keyword } from "@/models/keyword";
+import { Result } from "@/models/results";
 
 async function getIconUrl(domain) {
 	try {
@@ -61,7 +62,11 @@ export async function GET() {
 		owner: email,
 		domain: domains.map((doc) => doc.domain),
 	});
-	return Response.json({ domains, keywords });
+	const results = await Result.find({
+		domain: domains.map((doc) => doc.domain),
+		keyword: keywords.map((doc) => doc.keyword),
+	});
+	return Response.json({ domains, keywords, results });
 }
 
 export async function DELETE(req) {
@@ -70,5 +75,6 @@ export async function DELETE(req) {
 	await mongoose.connect(process.env.MONGODB_URI);
 	const session = await getServerSession(authOptions);
 	await Domain.deleteOne({ owner: session.user?.email, domain: domain });
+	await Keyword.deleteMany({ domain, owner: session.user.email });
 	return Response.json(true);
 }

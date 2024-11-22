@@ -1,7 +1,8 @@
 /* eslint-disable @next/next/no-img-element */
 import Link from "next/link";
+import Chart from "./chart";
 
-function DomainRow({ owner, domain, icon, keywords }) {
+function DomainRow({ owner, domain, icon, keywords, results }) {
 	return (
 		<div className="flex gap-2 bg-white border border-blue-200 border-b-4 p-4 rounded-lg items-center my-3">
 			{icon && <img src={icon} alt="" className="h-12" />}
@@ -28,7 +29,7 @@ function DomainRow({ owner, domain, icon, keywords }) {
 				))}
 			</div>
 			<div className="">
-				<div className="bg-green-100 w-36 h-[64px]"></div>
+				<Chart width={300} results={results} />
 			</div>
 		</div>
 	);
